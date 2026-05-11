@@ -1,0 +1,80 @@
+<!-- Permite agregar una barra de titulo --->
+{%  macro title_bar(title_name)  %}
+<div  style="background-color:#3498db; padding: 10px;">
+    <button id="close" type="button" class="close" aria-label="Close" style="position: absolute; top: 10px; right: 10px;">
+        <span  aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="text-white">{{ title_name  }}</h4>
+</div>
+{% endmacro %}
+
+
+<!--- Permite Input-Select-Label --->
+
+{% macro form_controls(type, id, label, classes, value, col='col-md-3', visible=True, password_toggle=False) %}
+    <div class="{{ col }} mb-3" {% if not visible %}style="display: none;"{% endif %}>
+        <label for="{{ id }}" class="form-label fw-bold text-secondary"class="form-label">{{ label }}</label>
+        {% if password_toggle and type == 'password' %}
+            <div class="input-group">
+                <input
+                    type="{{ type }}"
+                    class="{{ classes }}"
+                    id="{{ id }}"
+                    name="{{ id }}"
+                    value="{{ value }}">
+                <button
+                    type="button"
+                    class="btn btn-outline-secondary toggle-password"
+                    data-target="{{ id }}"
+                    aria-label="Mostrar u ocultar contraseña">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        {% else %}
+            <input
+                type="{{ type }}"
+                class="{{ classes }}"
+                id="{{ id }}"
+                name="{{ id }}"
+                value="{{ value }}">
+        {% endif %}
+        <!-- Mensaje de error único por campo -->
+        <small id="error-{{ id }}" class="text-danger" style="display: none;"></small>
+    </div>
+{% endmacro %}
+
+
+{% macro form_switch(idswitch, label, checked=false, col='col-md-3') %}
+    <div class="{{ col }} mb-3">
+        <label for="{{ idswitch }}" class="form-label"></label>
+        <div class="form-check form-switch">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="{{ idswitch }}"
+                name="{{ idswitch }}"
+                value="Si"
+                {% if checked %}checked{% endif %}>
+            <label class="form-check-label" for="{{ idswitch }}">{{ label }}</label>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro load_spinner() %}
+<div id="loading-spinner"
+     class="text-center"
+     style="display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;">
+    <div class="spinner-border text-success"
+         style="width: 6rem; height: 6rem;"
+         role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+</div>
+{% endmacro %}
