@@ -7,6 +7,7 @@ from config import AppConfig
 
 from src.models.mo_Usuario import mo_Usuario
 from src.utils.decorators import login_required
+from src.views.vi_UsuarioEX import main as usuario_blueprint
 
 from src.models.entities import Usuario
 
@@ -14,7 +15,7 @@ app = Flask(__name__, template_folder="src/templates", static_folder="src/static
 app.config.from_object(AppConfig)
 
 
-#app.register_blueprint(vi_UsuarioEX.main, url_prefix="/")
+app.register_blueprint(usuario_blueprint, url_prefix="/")
 #app.register_blueprint(vi_VisitaEX.main, url_prefix="/")
 #app.register_blueprint(vi_GetauxiliaryData.main, url_prefix="/")
 
@@ -33,7 +34,7 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    prueba()
+   # prueba()
 
     if request.method == "POST":
         username = request.form["username"]

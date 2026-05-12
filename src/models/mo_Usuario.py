@@ -40,8 +40,8 @@ class mo_Usuario:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True)as cursor:
                     query="""
-                            SELECT id, username, email, created_at, rol_id 
-                                FROM usuarios 
+                            SELECT id, username, full_name, email, created_at, rol_id 
+                                FROM users 
                                 WHERE status = 1  AND id =%s    
                             """
                     val=(iduser,)
