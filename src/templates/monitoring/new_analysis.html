@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}CHAKRA AI - Nuevo análisis{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new_analysis.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="chakra-analysis-page position-relative overflow-hidden animate__animated animate__fadeIn">
+    <div class="analysis-circle-bg analysis-circle-1"></div>
+    <div class="analysis-circle-bg analysis-circle-2"></div>
+
+    <i class="bi bi-flower1 analysis-floating-leaf text-white fs-1 top-0 start-0 m-5"></i>
+    <i class="bi bi-tree analysis-floating-leaf text-white fs-1 bottom-0 end-0 m-5"></i>
+
+    <div class="analysis-hero text-center text-white mb-5 position-relative">
+        <h1 class="brand-title gradient-text mb-3">CHAKRA AI</h1>
+        <p class="fs-5 mb-0">
+            Monitoreo agricola inteligente mediante vision artificial.
+        </p>
+    </div>
+
+    <div class="row g-0 analysis-main-card overflow-hidden position-relative">
+        <div class="col-lg-7 p-4 p-lg-5 text-white position-relative">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                <div>
+                    <span class="analysis-badge">
+                        <i class="bi bi-cpu"></i>
+                        Inteligencia Artificial Agricola
+                    </span>
+                </div>
+
+                <div>
+                    <span class="badge bg-success-subtle text-success px-4 py-2 rounded-pill fs-6">
+                        Cultivo: Arandano
+                    </span>
+                </div>
+            </div>
+
+            <div class="analysis-camera-box mb-4">
+                <video id="video" autoplay playsinline class="d-none"></video>
+                <canvas id="canvas" class="d-none"></canvas>
+                <img id="previewImage" class="d-none" alt="Preview del analisis">
+
+                <div id="placeholder" class="text-center px-4">
+                    <i class="bi bi-camera text-white" style="font-size:5rem;"></i>
+                    <h3 class="fw-bold mt-4">Captura o carga una imagen</h3>
+                    <p class="text-light mt-3 mb-0">
+                        Analiza hojas, frutos o cultivos usando inteligencia artificial.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <button id="openCamera" class="btn btn-agro w-100">
+                        <i class="bi bi-camera-video me-2"></i>
+                        Camara
+                    </button>
+                </div>
+
+                <div class="col-md-4">
+                    <button id="captureBtn" class="btn btn-outline-light analysis-action-btn w-100">
+                        <i class="bi bi-camera-fill me-2"></i>
+                        Capturar
+                    </button>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="btn btn-outline-warning analysis-action-btn w-100">
+                        <i class="bi bi-upload me-2"></i>
+                        Cargar
+                        <input type="file" id="imageUpload" accept="image/*" hidden>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 agro-panel p-4 p-lg-5 d-flex flex-column justify-content-center">
+            <div class="mb-4">
+                <h2 class="fw-bold text-success mb-3">Resultado del analisis</h2>
+                <p class="text-secondary mb-0">
+                    El sistema mostrara aqui el diagnostico inteligente del cultivo analizado.
+                </p>
+            </div>
+
+            <div class="analysis-result-card p-4 shadow-sm mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="bg-success rounded-circle d-flex align-items-center justify-content-center" style="width:60px;height:60px;">
+                        <i class="bi bi-check-circle-fill text-white fs-3"></i>
+                    </div>
+
+                    <div>
+                        <h4 class="fw-bold text-success mb-1">Cultivo saludable</h4>
+                        <p class="text-secondary mb-0">Nivel de confianza IA: 92%</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div>
+                    <h6 class="fw-bold text-dark mb-3">Recomendacion:</h6>
+                    <p class="text-secondary mb-0">
+                        Mantener el nivel actual de riego y continuar el monitoreo preventivo del cultivo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-3 text-center">
+                <div class="col-6">
+                    <div class="border rounded-4 p-3 bg-light">
+                        <h3 class="fw-bold text-success mb-1">12</h3>
+                        <small class="text-secondary">Analisis realizados</small>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="border rounded-4 p-3 bg-light">
+                        <h3 class="fw-bold text-warning mb-1">2</h3>
+                        <small class="text-secondary">Alertas detectadas</small>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-agro w-100 mt-4 py-3 fs-5">
+                <i class="bi bi-cpu-fill me-2"></i>
+                Analizar con IA
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/new_analysis.js') }}"></script>
+{% endblock %}

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/agrovision-theme.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}?v=2">
 
@@ -34,6 +33,7 @@
         }
         </style>
     {% endif %}
+    {% block extra_head %}{% endblock %}
     <style>
         .pulse-warning {
             animation: pulse-yellow 2s infinite;
@@ -53,7 +53,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <span class="brand-mark"><i class="bi bi-flower2"></i></span>
-            <span>AGROVISION AI</span>
+            <span>CHAKRA AI</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -82,7 +82,7 @@
                         <i class="bi bi-camera-fill me-1"></i>Monitoreo IA
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownInformes">
-                        <li><a class="dropdown-item" href="">Analisis recientes</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('bp_monitoring.nuevo_analisis') }}">Nuevo análisis</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
