@@ -44,11 +44,23 @@ class AppConfig:
     SESSION_REFRESH_EACH_REQUEST = _get_bool("SESSION_REFRESH_EACH_REQUEST", True)
 
     MYSQL_HOST = os.getenv("MY_SQL_HOST", "localhost")
+    MYSQL_PORT = int(os.getenv("MY_SQL_PORT", "3306"))
     MYSQL_USER = os.getenv("MY_SQL_USER", "")
     MYSQL_PASSWORD = os.getenv("MY_SQL_PASSWORD", "")
     MYSQL_DATABASE = os.getenv("MY_SQL_DATABASE", "")
     MYSQL_POOL_NAME = os.getenv("MY_SQL_POOL_NAME", "mypool")
     MYSQL_POOL_SIZE = int(os.getenv("MY_SQL_POOL_SIZE", "5"))
+    MYSQL_SSL_DISABLED = _get_bool("MY_SQL_SSL_DISABLED", False)
+    MYSQL_SSL_CA = os.getenv("MY_SQL_SSL_CA", "")
+    MYSQL_SSL_CERT = os.getenv("MY_SQL_SSL_CERT", "")
+    MYSQL_SSL_KEY = os.getenv("MY_SQL_SSL_KEY", "")
+    MYSQL_SSL_VERIFY_CERT = _get_bool("MY_SQL_SSL_VERIFY_CERT", False)
+    MYSQL_SSL_VERIFY_IDENTITY = _get_bool("MY_SQL_SSL_VERIFY_IDENTITY", False)
+    MYSQL_TLS_VERSIONS = [
+        version.strip()
+        for version in os.getenv("MY_SQL_TLS_VERSIONS", "TLSv1.2,TLSv1.3").split(",")
+        if version.strip()
+    ]
 
     APIS_PERU_TOKEN = os.getenv("APIS_PERU_TOKEN", "")
     APIS_PERU_URL = os.getenv("APIS_PERU_URL", "http://api.decolecta.com")
