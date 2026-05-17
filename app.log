@@ -603,3 +603,83 @@
 2026-05-13 11:53:54,077 - INFO - 192.168.43.143 - - [13/May/2026 11:53:54] "[32mGET /logout HTTP/1.1[0m" 302 -
 2026-05-13 11:53:54,126 - INFO - 192.168.43.143 - - [13/May/2026 11:53:54] "GET /login HTTP/1.1" 200 -
 2026-05-13 11:53:54,149 - INFO - 192.168.43.143 - - [13/May/2026 11:53:54] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:27:23,791 - INFO - Pool de conexiones configurado correctamente.
+2026-05-16 18:27:23,883 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5200
+ * Running on http://192.168.43.143:5200
+2026-05-16 18:27:23,883 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-16 18:27:23,884 - INFO -  * Restarting with stat
+2026-05-16 18:27:28,944 - INFO - Pool de conexiones configurado correctamente.
+2026-05-16 18:27:28,969 - WARNING -  * Debugger is active!
+2026-05-16 18:27:28,986 - INFO -  * Debugger PIN: 131-062-424
+2026-05-16 18:27:31,953 - INFO - 192.168.43.143 - - [16/May/2026 18:27:31] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-16 18:27:34,351 - INFO - 192.168.43.143 - - [16/May/2026 18:27:34] "GET /login HTTP/1.1" 200 -
+2026-05-16 18:27:34,436 - INFO - 192.168.43.143 - - [16/May/2026 18:27:34] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:27:35,164 - INFO - 192.168.43.143 - - [16/May/2026 18:27:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-16 18:30:09,716 - INFO - 192.168.43.143 - - [16/May/2026 18:30:09] "GET /login HTTP/1.1" 200 -
+2026-05-16 18:30:09,749 - INFO - 192.168.43.143 - - [16/May/2026 18:30:09] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:30:32,452 - INFO - 192.168.43.143 - - [16/May/2026 18:30:32] "POST /login HTTP/1.1" 200 -
+2026-05-16 18:30:32,477 - INFO - 192.168.43.143 - - [16/May/2026 18:30:32] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:30:47,341 - INFO - 192.168.43.143 - - [16/May/2026 18:30:47] "POST /login HTTP/1.1" 200 -
+2026-05-16 18:30:47,363 - INFO - 192.168.43.143 - - [16/May/2026 18:30:47] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:31:04,314 - INFO -  * Detected change in 'D:\\Proyectos\\Python\\AgrovisionAI\\app.py', reloading
+2026-05-16 18:31:04,356 - INFO -  * Restarting with stat
+2026-05-16 18:31:08,928 - INFO - Pool de conexiones configurado correctamente.
+2026-05-16 18:31:08,953 - WARNING -  * Debugger is active!
+2026-05-16 18:31:08,956 - INFO -  * Debugger PIN: 131-062-424
+2026-05-16 18:31:12,611 - INFO - 192.168.43.143 - - [16/May/2026 18:31:12] "POST /login HTTP/1.1" 200 -
+2026-05-16 18:31:12,675 - INFO - 192.168.43.143 - - [16/May/2026 18:31:12] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:31:29,716 - INFO - 192.168.43.143 - - [16/May/2026 18:31:29] "POST /login HTTP/1.1" 200 -
+2026-05-16 18:31:29,754 - INFO - 192.168.43.143 - - [16/May/2026 18:31:29] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:31:44,536 - INFO - 192.168.43.143 - - [16/May/2026 18:31:44] "GET /login HTTP/1.1" 200 -
+2026-05-16 18:31:44,562 - INFO - 192.168.43.143 - - [16/May/2026 18:31:44] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:31:59,078 - INFO - 192.168.43.143 - - [16/May/2026 18:31:59] "POST /login HTTP/1.1" 200 -
+2026-05-16 18:31:59,104 - INFO - 192.168.43.143 - - [16/May/2026 18:31:59] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:32:54,170 - INFO - 192.168.43.143 - - [16/May/2026 18:32:54] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 18:38:12,905 - INFO -  * Detected change in 'D:\\Proyectos\\Python\\AgrovisionAI\\src\\models\\mo_Usuario.py', reloading
+2026-05-16 18:38:12,943 - INFO -  * Restarting with stat
+2026-05-16 18:38:17,430 - INFO - Pool de conexiones configurado correctamente.
+2026-05-16 18:38:17,458 - WARNING -  * Debugger is active!
+2026-05-16 18:38:17,459 - INFO -  * Debugger PIN: 131-062-424
+2026-05-16 18:38:49,584 - INFO - 192.168.43.143 - - [16/May/2026 18:38:49] "POST /login HTTP/1.1" 200 -
+2026-05-16 18:38:49,688 - INFO - 192.168.43.143 - - [16/May/2026 18:38:49] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:05:42,058 - INFO - Pool de conexiones configurado correctamente.
+2026-05-16 19:05:42,089 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5200
+ * Running on http://192.168.43.143:5200
+2026-05-16 19:05:42,089 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-16 19:05:42,090 - INFO -  * Restarting with stat
+2026-05-16 19:05:47,686 - INFO - Pool de conexiones configurado correctamente.
+2026-05-16 19:05:47,711 - WARNING -  * Debugger is active!
+2026-05-16 19:05:47,711 - INFO -  * Debugger PIN: 131-062-424
+2026-05-16 19:05:47,736 - INFO - 192.168.43.143 - - [16/May/2026 19:05:47] "GET /login HTTP/1.1" 200 -
+2026-05-16 19:05:47,810 - INFO - 192.168.43.143 - - [16/May/2026 19:05:47] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:05:58,019 - INFO - 192.168.43.143 - - [16/May/2026 19:05:58] "POST /login HTTP/1.1" 200 -
+2026-05-16 19:05:58,045 - INFO - 192.168.43.143 - - [16/May/2026 19:05:58] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:12:06,100 - INFO -  * Detected change in 'D:\\Proyectos\\Python\\AgrovisionAI\\src\\models\\mo_Usuario.py', reloading
+2026-05-16 19:12:06,143 - INFO -  * Restarting with stat
+2026-05-16 19:12:11,300 - INFO - Pool de conexiones configurado correctamente.
+2026-05-16 19:12:11,321 - WARNING -  * Debugger is active!
+2026-05-16 19:12:11,323 - INFO -  * Debugger PIN: 131-062-424
+2026-05-16 19:12:30,372 - INFO - 192.168.43.143 - - [16/May/2026 19:12:30] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-16 19:12:32,801 - INFO - 192.168.43.143 - - [16/May/2026 19:12:32] "GET / HTTP/1.1" 200 -
+2026-05-16 19:12:32,830 - INFO - 192.168.43.143 - - [16/May/2026 19:12:32] "[33mGET /static/img/logo_agrovision12.png HTTP/1.1[0m" 404 -
+2026-05-16 19:12:32,868 - INFO - 192.168.43.143 - - [16/May/2026 19:12:32] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:12:33,043 - INFO - 192.168.43.143 - - [16/May/2026 19:12:33] "[33mGET /static/img/favicon.png?v=2 HTTP/1.1[0m" 404 -
+2026-05-16 19:12:42,829 - INFO - 192.168.43.143 - - [16/May/2026 19:12:42] "GET /usuario/password HTTP/1.1" 200 -
+2026-05-16 19:12:42,854 - INFO - 192.168.43.143 - - [16/May/2026 19:12:42] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:12:42,879 - INFO - 192.168.43.143 - - [16/May/2026 19:12:42] "GET /static/js/userChangepass.js HTTP/1.1" 200 -
+2026-05-16 19:13:01,230 - INFO - 192.168.43.143 - - [16/May/2026 19:13:01] "POST /usuario/update_password HTTP/1.1" 200 -
+2026-05-16 19:13:04,813 - INFO - 192.168.43.143 - - [16/May/2026 19:13:04] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-05-16 19:13:04,831 - INFO - 192.168.43.143 - - [16/May/2026 19:13:04] "GET /login HTTP/1.1" 200 -
+2026-05-16 19:13:04,852 - INFO - 192.168.43.143 - - [16/May/2026 19:13:04] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:13:15,872 - INFO - 192.168.43.143 - - [16/May/2026 19:13:15] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-16 19:13:17,806 - INFO - 192.168.43.143 - - [16/May/2026 19:13:17] "GET / HTTP/1.1" 200 -
+2026-05-16 19:13:17,824 - INFO - 192.168.43.143 - - [16/May/2026 19:13:17] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:13:17,828 - INFO - 192.168.43.143 - - [16/May/2026 19:13:17] "[33mGET /static/img/logo_agrovision12.png HTTP/1.1[0m" 404 -
+2026-05-16 19:13:33,108 - INFO - 192.168.43.143 - - [16/May/2026 19:13:33] "GET /monitoring/new-analysis HTTP/1.1" 200 -
+2026-05-16 19:13:33,137 - INFO - 192.168.43.143 - - [16/May/2026 19:13:33] "[36mGET /static/css/agrovision-theme.css HTTP/1.1[0m" 304 -
+2026-05-16 19:13:33,143 - INFO - 192.168.43.143 - - [16/May/2026 19:13:33] "GET /static/css/new_analysis.css HTTP/1.1" 200 -
+2026-05-16 19:13:33,158 - INFO - 192.168.43.143 - - [16/May/2026 19:13:33] "GET /static/js/new_analysis.js HTTP/1.1" 200 -

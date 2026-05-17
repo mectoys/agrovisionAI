@@ -64,7 +64,7 @@ class mo_Usuario:
                     """
                     cursor.execute(query, (username,))
                     usuario = cursor.fetchone()
-
+                    print(query)
                     if not usuario:
                         return False, "Usuario no encontrado", None
 
@@ -235,13 +235,21 @@ class mo_Usuario:
     def _ensure_active_sessions_table(cursor):
         cursor.execute(
             """
-            CREATE TABLE IF NOT EXISTS sesiones_activas (
+                CREATE TABLE IF NOT EXISTS sesiones_activas (
                 usuario_id INT PRIMARY KEY,
                 session_token VARCHAR(128) NOT NULL,
-                updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-                    ON UPDATE CURRENT_TIMESTAMP
-            )
+                updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                ON UPDATE CURRENT_TIMESTAMP
+                );            
             """
+         #   """
+          #  CREATE TABLE IF NOT EXISTS sesiones_activas (
+        #        usuario_id INT PRIMARY KEY,
+          #      session_token VARCHAR(128) NOT NULL,
+         #       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+          #          ON UPDATE CURRENT_TIMESTAMP
+         #   )
+          #"""
         )
 
     @staticmethod
