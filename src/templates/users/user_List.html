@@ -1,0 +1,55 @@
+{% extends './base.html' %}
+{% block title %}Listado Usuarios{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="chakra-module-shell p-4">
+            <div class="chakra-toolbar">
+                <div>
+                    <h2 class="chakra-section-title mb-1">Usuarios del sistema</h2>
+                    <p class="chakra-section-subtitle mb-0">
+                        Gestiona accesos, correos y roles de los usuarios de CHAKRA AI.
+                    </p>
+                </div>
+
+                <button id="editar" class="btn btn-agro shadow-sm">
+                    <i class="bi bi-pencil-square me-2"></i>Editar Usuario
+                </button>
+            </div>
+
+            <button id="agregar" class="floating-btn">
+                <i class="fa fa-plus"></i>
+            </button>
+
+            <div class="chakra-table-shell">
+                <table id="table_id" class="display hover" style="width:100%">
+                    <thead>
+                        <tr class="thread-dark">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/user.js') }}"></script>
+<script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        vc_asignarConfiguraciones();
+    });
+</script>
+{% endblock %}
+
+{% block extra_js %}
+    {% include './datatable_includes.html' %}
+{% endblock %}

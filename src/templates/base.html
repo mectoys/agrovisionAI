@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/agrovision-theme.css') }}">
+
+        <!-- Hoja de stilo para centrar la imagen , botón flotante y ocultar la primera columna VisitaGrupal-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}?v=2">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -69,10 +73,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-tree-fill me-1"></i>Mis Fincas
+                        <i class="bi bi-tree-fill me-1"></i>Mis Cultivos
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="">Mis parcelas</a></li>
+                        <li><a class="dropdown-item" href="">Fundos</a></li>
+                        <li><a class="dropdown-item" href="">Parcelas</a></li>
                         <li><a class="dropdown-item" href="">Cultivos activos</a></li>
                     </ul>
                 </li>
@@ -112,7 +117,8 @@
                         </li>
                         {% if session.usuario.rol == 1 %}
                         <li>
-                            <a class="dropdown-item" href="">
+                            <a class="dropdown-item"
+                               href="{{ url_for('bp_usuario.lista_Usuario')}}">
                                 Crear Usuario
                             </a>
                         </li>

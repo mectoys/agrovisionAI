@@ -23,9 +23,10 @@ class mo_Usuario:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True)as cursor:
                     query="""
-                            SELECT id, username, email, fecha_creacion, CASE  WHEN rol_id=1 THEN "Administrador" 
+                            SELECT id, username, email, created_at as fecha_creacion, 
+                            CASE  WHEN rol_id=1 THEN "Administrador" 
                             WHEN  rol_id=2 THEN "Lectura/Escritura" ELSE  "Lectura" END AS rol_id
-                            FROM users WHERE activo=1      
+                            FROM users WHERE status=1    
                             """
                     cursor.execute(query)
                     usuarios= cursor.fetchall()

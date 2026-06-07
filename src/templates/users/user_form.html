@@ -1,0 +1,75 @@
+{% extends './base.html' %}
+{% import './macros.html' as macros %}
+{% block title %}Gestión Usuario{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="chakra-module-shell position-relative">
+        {{ macros.title_bar("Gestión Usuario") }}
+
+        <div class="chakra-form-body">
+            {% set es_edicion = usuario is not none %}
+
+            <div class="mb-4">
+                <h3 class="chakra-section-title mb-2">{{ "Editar usuario" if es_edicion else "Crear usuario" }}</h3>
+                <p class="chakra-section-subtitle mb-0">
+                    Administra las credenciales y permisos de acceso dentro de CHAKRA AI.
+                </p>
+            </div>
+
+            <div class="row mt-3">
+                {{ macros.form_controls('text', 'username', 'Usuario:', 'form-control', usuario.username if usuario else '') }}
+                {{ macros.form_controls('text', 'email', 'E-mail:', 'form-control', usuario.email if usuario else '') }}
+
+                {% if not usuario %}
+                    {{ macros.form_controls('password', 'clave', 'Contraseña:', 'form-control', '', password_toggle=True) }}
+                    {{ macros.form_controls('password', 'reclave', 'Confirmar Contraseña:', 'form-control', '', password_toggle=True) }}
+                {% endif %}
+
+                <div class="col-md-3 mb-3">
+                    <label for="rol" class="form-label agro-label">Rol:</label>
+                    <select id="rol" name="rol" class="form-select agro-input">
+                        <option value="1">Administrador</option>
+                        <option value="2">Usuario</option>
+                    </select>
+                </div>
+                {{ macros.load_spinner() }}
+            </div>
+
+            <input type="hidden" id="iduser" name="iduser" value="{{ usuario.id if usuario else '0' }}">
+            <button id="guardar" class="btn btn-agro mt-2">
+                {{ "Actualizar Usuario" if es_edicion else "Crear Usuario" }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/closeforms.js') }}"></script>
+<script src="{{ url_for('static', filename='js/elementSelectsEX.js') }}"></script>
+<script src="{{ url_for('static', filename='js/userforms.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        vo_methodCreate();
+        vo_closeForms('/usuario');
+        document.querySelectorAll('.toggle-password').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+                if (!input || !icon) return;
+
+                const isPassword = input.getAttribute('type') === 'password';
+                input.setAttribute('type', isPassword ? 'text' : 'password');
+                icon.classList.toggle('bi-eye', !isPassword);
+                icon.classList.toggle('bi-eye-slash', isPassword);
+            });
+        });
+
+        {% if usuario %}
+            selectValueforSelectedIndex("{{ usuario.rol_id }}", 'rol');
+        {% endif %}
+    });
+</script>
+{% endblock %}

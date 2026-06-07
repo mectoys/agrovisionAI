@@ -31,6 +31,20 @@ def lista_Usuario():
         use_datatables=True,
         use_visitorcss=False,
     )
+#Cargar listado de Usuarios
+@main.route('/usuario/data')
+@admin_required
+def Usuario_data():
+    usuarios = mo_Usuario.get_usuarios()
+    for v in usuarios:
+
+        # Formateo fecha creacion
+        if v['fecha_creacion']:
+            v['fecha_creacion'] = v['fecha_creacion'].strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            v['fecha_creacion'] = ""
+
+    return jsonify(usuarios)
 
 
 @main.route('/usuario/page_user')
