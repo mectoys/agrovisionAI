@@ -1,0 +1,63 @@
+{% extends './base.html' %}
+{% import './macros.html' as macros %}
+{% block title %}Gestión Fundo{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="chakra-module-shell position-relative">
+        {{ macros.title_bar("Gestión Fundos") }}
+
+        <div class="chakra-form-body">
+            {% set es_edicion = fundo is not none %}
+
+            <div class="mb-4">
+                <h3 class="chakra-section-title mb-2">{{ "Editar Fundo" if es_edicion else "Crear Fundo" }}</h3>
+                <p class="chakra-section-subtitle mb-0">
+                   Gestiona registro de los fundos que tienes.
+                </p>
+            </div>
+
+            <div class="row mt-3">
+                {{ macros.form_controls('text', 'name', 'Nombre:', 'form-control', fundo.name if fundo else '') }}
+                {{ macros.form_controls('text', 'location', 'Ubicación:', 'form-control', fundo.location if fundo else '') }}
+                {{ macros.form_controls('text', 'area_hectares', 'Hectáreas:', 'form-control', fundo.area_hectares if fundo else '') }}
+                {{ macros.load_spinner() }}
+            </div>
+
+            <input type="hidden" id="id" name="id" value="{{ fundo.id if fundo else '0' }}">
+            <button id="guardar" class="btn btn-agro mt-2">
+                {{ "Actualizar Fundo" if es_edicion else "Crear Fundo" }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/closeforms.js') }}"></script>
+<script src="{{ url_for('static', filename='js/elementSelectsEX.js') }}"></script>
+<script src="{{ url_for('static', filename='js/userforms.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        vo_methodCreate();
+        vo_closeForms('/farms');
+        document.querySelectorAll('.toggle-password').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+                if (!input || !icon) return;
+
+                const isPassword = input.getAttribute('type') === 'password';
+                input.setAttribute('type', isPassword ? 'text' : 'password');
+                icon.classList.toggle('bi-eye', !isPassword);
+                icon.classList.toggle('bi-eye-slash', isPassword);
+            });
+        });
+
+        {% if usuario %}
+            selectValueforSelectedIndex("{{ usuario.rol_id }}", 'rol');
+        {% endif %}
+    });
+</script>
+{% endblock %}
