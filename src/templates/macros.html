@@ -10,7 +10,7 @@
 
 
 <!--- Permite Input-Select-Label --->
-{% macro form_controls(type, id, label, classes, value, col='col-md-3', visible=True, password_toggle=False) %}
+{% macro form_controls(type, id, label, classes, value, col='col-md-3', visible=True, password_toggle=False, step='', min='', placeholder='', inputmode='') %}
     <div class="{{ col }} mb-3" {% if not visible %}style="display: none;"{% endif %}>
         <label for="{{ id }}" class="form-label agro-label">{{ label }}</label>
         {% if password_toggle and type == 'password' %}
@@ -20,7 +20,11 @@
                     class="{{ classes }} agro-input border-end-0"
                     id="{{ id }}"
                     name="{{ id }}"
-                    value="{{ value }}">
+                    value="{{ value }}"
+                    {% if step %}step="{{ step }}"{% endif %}
+                    {% if min %}min="{{ min }}"{% endif %}
+                    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+                    {% if inputmode %}inputmode="{{ inputmode }}"{% endif %}>
                 <button
                     type="button"
                     class="btn btn-agro-outline toggle-password"
@@ -35,7 +39,11 @@
                 class="{{ classes }} agro-input"
                 id="{{ id }}"
                 name="{{ id }}"
-                value="{{ value }}">
+                value="{{ value }}"
+                {% if step %}step="{{ step }}"{% endif %}
+                {% if min %}min="{{ min }}"{% endif %}
+                {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+                {% if inputmode %}inputmode="{{ inputmode }}"{% endif %}>
         {% endif %}
         <small id="error-{{ id }}" class="text-danger" style="display: none;"></small>
     </div>

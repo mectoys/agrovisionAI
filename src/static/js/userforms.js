@@ -91,7 +91,7 @@
             formData.reclave = $('#reclave').val();
         }
 
-        ejecutar_Solicitud(formData, '/usuario/page') //anterior  '/usuario/create'
+        ejecutar_SolicitudX(formData, '/usuario/page') //anterior  '/usuario/create'
             .then(response => {
             spinner.style.display = 'none'; // Ocultar en éxito
                 if (response.success) {
