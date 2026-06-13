@@ -2,50 +2,52 @@ from src.database.connectDB import get_connection
 from mysql.connector import Error as MySqlError
 from datetime import datetime
 import secrets
-from contextlib import  contextmanager
+from contextlib import contextmanager
 import bcrypt
+
 
 class farm_model:
 
     @staticmethod
     @contextmanager
     def get_managed_connection():
-        connection =get_connection()
+        connection = get_connection()
         try:
-            yield  connection
+            yield connection
         finally:
             if connection:
                 connection.close()
 
     @staticmethod
-    def get_farms():
+    def get_farms(userid):
         try:
             with get_connection() as conn:
-                with conn.cursor(dictionary=True)as cursor:
-                    query="""
+                with conn.cursor(dictionary=True) as cursor:
+                    query = """
                             SELECT id, name, location, area_hectares, created_at as fecha_creacion
-                            FROM farms    
+                            FROM farms  
+                            WHERE user_id  =%s
                             """
-                    cursor.execute(query)
-                    usuarios= cursor.fetchall()
-                    return usuarios
+                    val = (userid,)
+                    cursor.execute(query, val)
+                    farms = cursor.fetchall()
+                    return farms
         except Exception as e:
             print(f"Error en el Listado: {str(e)}")
             return False, "Error en el servidor", None
-
 
     @staticmethod
     def get_onefarm(idfarm):
         try:
             with get_connection() as conn:
-                with conn.cursor(dictionary=True)as cursor:
-                    query="""
+                with conn.cursor(dictionary=True) as cursor:
+                    query = """
                             SELECT id,name,location,area_hectares,created_at 
                             FROM farms 
                             WHERE id = %s    
                             """
-                    val=(idfarm,)
-                    cursor.execute(query,val)
+                    val = (idfarm,)
+                    cursor.execute(query, val)
                     return cursor.fetchone()
         except Exception as e:
             print(f"Error al obtener Fundo: {str(e)}")

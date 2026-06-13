@@ -96,6 +96,19 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/"><i class="bi bi-bar-chart-line-fill me-1"></i>Reportes</a>
                 </li>
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownConfig"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-tree-fill me-1"></i>Configuraciones
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownConfig">
+                        <li><a class="dropdown-item" href="{{ url_for('bp_farm.list_farms') }}">Cultivos</a></li>
+                        <li><a class="dropdown-item" href="">xxx</a></li>
+                        <li><a class="dropdown-item" href="">ccccc</a></li>
+                    </ul>
+                </li>
+
             </ul>
 
             {% if session.usuario %}

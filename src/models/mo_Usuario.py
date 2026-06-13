@@ -5,6 +5,8 @@ import secrets
 from contextlib import  contextmanager
 import bcrypt
 
+
+
 class mo_Usuario:
 
     @staticmethod

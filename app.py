@@ -29,6 +29,7 @@ app.register_blueprint(monitoring_blueprint, url_prefix="/")
 def index():
 
     return render_template(
+
         "index.html",
         use_datatables=False,
         username=session["usuario"]["username"],

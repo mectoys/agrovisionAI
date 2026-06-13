@@ -68,7 +68,6 @@ function enviarDatosAlServidor(spinner) {
         area_hectares: $('#area_hectares').val()
     };
 
-    console.log(formData);
     ejecutar_Solicitud(formData, '/farms/page')
         .then(response => {
             spinner.style.display = 'none';

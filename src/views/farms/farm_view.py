@@ -7,23 +7,31 @@ from src.utils.decorators import admin_required, login_required
 
 main = Blueprint('bp_farm', __name__)
 
+#Obtener datos de usuario por sesion
+def ObtainUserId():
+    usuario = session.get('usuario')
+    if not usuario:
+        return jsonify([]), 401
+    id_user = usuario.get('id')
+    return id_user
+
 
 @main.route('/farms')
-@admin_required
+@login_required
 def list_farms():
-    farms = farm_model.get_farms()
-    print("data")
+
     return render_template(
         '/farms/list.html',
-        farms=farms,
         use_datatables=True,
         use_visitorcss=False,
     )
 #Cargar listado de Fincas Farms
 @main.route('/farms/data')
-@admin_required
+@login_required
 def Farms_data():
-    farms = farm_model.get_farms()
+    id_user = ObtainUserId()
+    farms = farm_model.get_farms(id_user)
+
     for v in farms:
         # Formateo fecha creacion
         if v['fecha_creacion']:
@@ -35,7 +43,7 @@ def Farms_data():
 
 #Fundo mantenimiento create-update
 @main.route('/farms/farm-createupdate')
-@admin_required
+@login_required
 def farm_form_page():
     idfarm = request.args.get('id', type=int)
     farm = farm_model.get_onefarm(idfarm) if idfarm else None
@@ -48,7 +56,7 @@ def farm_form_page():
 
 
 @main.route('/farms/page', methods=['POST'])
-@admin_required
+@login_required
 def farm_form_action():
     try:
         data = request.get_json()
@@ -56,12 +64,12 @@ def farm_form_action():
         name = data.get('name', '').strip()
         location = data.get('location', '').strip()
         area_hectares = float(data.get('area_hectares', 0))
-        user_id = data.get('user_id', 1)
+        id_user = ObtainUserId()
 
         if not name or not location or not area_hectares:
             return jsonify({"success": False, "error": "Campos obligatorios incompletos"}), 400
 
-        farm_obj = farm(user_id, name, location, area_hectares, idfarm if idfarm else 0)
+        farm_obj = farm(id_user, name, location, area_hectares, idfarm if idfarm else 0)
         if idfarm:
             result = farm_model.update_farm(farm_obj)
             message = "Fundo actualizado correctamente"
