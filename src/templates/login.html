@@ -141,6 +141,22 @@
 
           <form method="post" action="{{ url_for('login') }}">
             <div class="mb-4">
+              <label class="form-label fw-semibold text-secondary">RUC</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-end-0 rounded-start-4">
+                  <i class="bi bi-envelope text-success"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control login-input border-start-0"
+                  id="ruc"
+                  name="ruc"
+                  placeholder="Ingresar RUC"
+                  required>
+              </div>
+            </div>
+
+            <div class="mb-4">
               <label class="form-label fw-semibold text-secondary">Correo electronico</label>
               <div class="input-group">
                 <span class="input-group-text bg-white border-end-0 rounded-start-4">
@@ -190,26 +206,6 @@
               Ingresar al Sistema
             </button>
 
-            <div class="text-center text-secondary mb-4">
-              o continuar con
-            </div>
-
-            <div class="row g-3">
-              <div class="col-6">
-                <button type="button" class="btn btn-outline-success w-100 rounded-4 py-3">
-                  <i class="bi bi-google me-2"></i>
-                  Google
-                </button>
-              </div>
-
-              <div class="col-6">
-                <button type="button" class="btn btn-outline-dark w-100 rounded-4 py-3">
-                  <i class="bi bi-microsoft me-2"></i>
-                  Microsoft
-                </button>
-              </div>
-            </div>
-
             <div class="text-center mt-5 text-secondary">
               No tienes cuenta?
               <a href="#" class="text-success fw-semibold text-decoration-none">
@@ -229,6 +225,12 @@
     const form = document.querySelector('form');
     if (form) {
       form.addEventListener('submit', function() {
+
+        const rucInput = document.getElementById('ruc');
+        if (rucInput) {
+          localStorage.setItem('agrovision_preferencia_ruc', rucInput.value);
+        }
+
         const userInput = document.getElementById('username');
         if (userInput) {
           localStorage.setItem('agrovision_preferencia_user', userInput.value);
@@ -237,6 +239,16 @@
     }
 
     window.onload = function() {
+
+      const rucGuardado = localStorage.getItem('agrovision_preferencia_ruc');
+      if (rucGuardado) {
+        const rucInput = document.getElementById('ruc');
+        if (rucInput) {
+          rucInput.value = rucGuardado;
+        }
+      }
+
+
       const userGuardado = localStorage.getItem('agrovision_preferencia_user');
       if (userGuardado) {
         const userInput = document.getElementById('username');

@@ -2,9 +2,8 @@ from src.database.connectDB import get_connection
 from mysql.connector import Error as MySqlError
 from datetime import datetime
 import secrets
-from contextlib import  contextmanager
+from contextlib import contextmanager
 import bcrypt
-
 
 
 class mo_Usuario:
@@ -12,60 +11,61 @@ class mo_Usuario:
     @staticmethod
     @contextmanager
     def get_managed_connection():
-        connection =get_connection()
+        connection = get_connection()
         try:
-            yield  connection
+            yield connection
         finally:
             if connection:
                 connection.close()
 
     @staticmethod
-    def get_usuarios():
+    def get_usuarios(companyid):
         try:
             with get_connection() as conn:
-                with conn.cursor(dictionary=True)as cursor:
-                    query="""
+                with conn.cursor(dictionary=True) as cursor:
+                    query = """
                             SELECT id, username, email, created_at as fecha_creacion, 
                             CASE  WHEN rol_id=1 THEN "Administrador" 
                             WHEN  rol_id=2 THEN "Lectura/Escritura" ELSE  "Lectura" END AS rol_id
-                            FROM users WHERE status=1    
+                            FROM users WHERE status=1  AND company_id= %s  
                             """
-                    cursor.execute(query)
-                    usuarios= cursor.fetchall()
+                    val=(companyid,)
+                    cursor.execute(query, val)
+                    usuarios = cursor.fetchall()
                     return usuarios
         except Exception as e:
             print(f"Error en el Listado: {str(e)}")
             return False, "Error en el servidor", None
 
     @staticmethod
-    def get_oneUser(iduser):
+    def get_oneUser(iduser, companyid):
         try:
             with get_connection() as conn:
-                with conn.cursor(dictionary=True)as cursor:
-                    query="""
+                with conn.cursor(dictionary=True) as cursor:
+                    query = """
                             SELECT id, username, full_name, email, created_at, rol_id 
                                 FROM users 
-                                WHERE status = 1  AND id =%s    
+                                WHERE status = 1  AND id =%s   AND company_id= %s  
                             """
-                    val=(iduser,)
-                    cursor.execute(query,val)
+                    val = (iduser, companyid)
+                    cursor.execute(query, val)
                     return cursor.fetchone()
         except Exception as e:
             print(f"Error al obtener usuario: {str(e)}")
             return None
 
     @staticmethod
-    def get_usuario(username, password):
+    def get_usuario(username, password, companyid):
         try:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     # Consulta actualizada para incluir rol_id
                     query = """
-                        SELECT id, username, password_hash, rol_id 
+                        SELECT id, username, password_hash, rol_id, company_id
                         FROM users 
-                        WHERE username = %s
+                        WHERE username = %s  AND company_id= %s  
                     """
-                    cursor.execute(query, (username,))
+                    cursor.execute(query, (username,companyid))
                     usuario = cursor.fetchone()
                     print(query)
                     if not usuario:
@@ -78,6 +78,7 @@ class mo_Usuario:
                     return True, "Autenticación exitosa", {
                         'id': usuario['id'],
                         'username': usuario['username'],
+                        'company_id': usuario['company_id'],
                         'rol_id': usuario['rol_id']  # Asegúrate de incluir esto
                     }
 
@@ -98,9 +99,10 @@ class mo_Usuario:
 
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO users (username, full_name, password_hash, email, rol_id) VALUES (%s, %s, %s, %s, %s)",
+                    "INSERT INTO users (username, full_name, password_hash, email, rol_id, company_id)"
+                    " VALUES (%s, %s, %s, %s, %s, %s)",
                     (obj_Usuario.username, obj_Usuario.full_name, hashed_pw.decode('utf-8'), obj_Usuario.email,
-                     obj_Usuario.rol)
+                     obj_Usuario.rol, obj_Usuario.company_id)
                 )
                 conn.commit()
                 return {"success": True, "message": "Usuario creado"}
@@ -136,8 +138,8 @@ class mo_Usuario:
             conn = get_connection()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "UPDATE users SET username=%s, email=%s, rol_id=%s WHERE id=%s",
-                    (obj_Usuario.username, obj_Usuario.email, obj_Usuario.rol, obj_Usuario.id)
+                    "UPDATE users SET username=%s, email=%s, rol_id=%s WHERE id=%s and company_id=%s",
+                    (obj_Usuario.username, obj_Usuario.email, obj_Usuario.rol, obj_Usuario.id, obj_Usuario.company_id)
                 )
                 conn.commit()
                 return {"success": True, "message": "Usuario actualizado"}
@@ -166,13 +168,12 @@ class mo_Usuario:
             if conn and conn.is_connected():
                 conn.close()
 
-
     @staticmethod
-    def generar_token_recuperacion(email):
+    def generar_token_recuperacion(email, company_id):
         conn = get_connection()
         try:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
+                cursor.execute("SELECT id FROM users WHERE email = %s AND company_id= %S", (email,company_id))
                 usuario = cursor.fetchone()
                 if not usuario:
                     return None
@@ -194,7 +195,7 @@ class mo_Usuario:
     # Añadir otros métodos necesarios (actualizar contraseña, asignar roles, etc.)
 
     @staticmethod
-    def actualizar_password(usuario_id, pass_actual, pass_nueva):
+    def actualizar_password(usuario_id, pass_actual, pass_nueva, company_id):
         """
         Actualiza la contraseña validando la identidad del usuario.
         Retorna: (bool exito, str mensaje)
@@ -206,7 +207,7 @@ class mo_Usuario:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     # 2. Buscar usuario (Solo pedimos lo necesario: el hash)
-                    cursor.execute("SELECT password_hash FROM users WHERE id = %s", (usuario_id,))
+                    cursor.execute("SELECT password_hash FROM users WHERE id = %s AND company_id = %s", (usuario_id,))
                     usuario = cursor.fetchone()
 
                     if not usuario:
@@ -222,7 +223,7 @@ class mo_Usuario:
                     nueva_hash = bcrypt.hashpw(pass_nueva.encode('utf-8'), bcrypt.gensalt())
 
                     cursor.execute(
-                        "UPDATE users SET password_hash = %s WHERE id = %s",
+                        "UPDATE users SET password_hash = %s WHERE id = %s AND company_id= %s",
                         (nueva_hash.decode('utf-8'), usuario_id)  # Guardamos como string
                     )
 
@@ -240,23 +241,24 @@ class mo_Usuario:
             """
                 CREATE TABLE IF NOT EXISTS sesiones_activas (
                 usuario_id INT PRIMARY KEY,
+                company_id  INT NOT NULL,
                 session_token VARCHAR(128) NOT NULL,
                 updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                 ON UPDATE CURRENT_TIMESTAMP
                 );            
             """
-         #   """
-          #  CREATE TABLE IF NOT EXISTS sesiones_activas (
-        #        usuario_id INT PRIMARY KEY,
-          #      session_token VARCHAR(128) NOT NULL,
-         #       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-          #          ON UPDATE CURRENT_TIMESTAMP
-         #   )
-          #"""
+            #   """
+            #  CREATE TABLE IF NOT EXISTS sesiones_activas (
+            #        usuario_id INT PRIMARY KEY,
+            #      session_token VARCHAR(128) NOT NULL,
+            #       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+            #          ON UPDATE CURRENT_TIMESTAMP
+            #   )
+            #"""
         )
 
     @staticmethod
-    def set_active_session_token(usuario_id, session_token):
+    def set_active_session_token(usuario_id, session_token, company_id):
         conn = None
         try:
             conn = get_connection()
@@ -264,13 +266,13 @@ class mo_Usuario:
                 mo_Usuario._ensure_active_sessions_table(cursor)
                 cursor.execute(
                     """
-                    INSERT INTO sesiones_activas (usuario_id, session_token)
-                    VALUES (%s, %s)
+                    INSERT INTO sesiones_activas (usuario_id, session_token, company_id)
+                    VALUES (%s, %s, %s)
                     ON DUPLICATE KEY UPDATE
                         session_token = VALUES(session_token),
                         updated_at = CURRENT_TIMESTAMP
                     """,
-                    (usuario_id, session_token),
+                    (usuario_id, session_token, company_id),
                 )
                 conn.commit()
             return True
@@ -284,14 +286,14 @@ class mo_Usuario:
                 conn.close()
 
     @staticmethod
-    def get_active_session_token(usuario_id):
+    def get_active_session_token(usuario_id, company_id):
         try:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     mo_Usuario._ensure_active_sessions_table(cursor)
                     cursor.execute(
-                        "SELECT session_token FROM sesiones_activas WHERE usuario_id = %s",
-                        (usuario_id,),
+                        "SELECT session_token FROM sesiones_activas WHERE usuario_id = %s AND company_id=%s",
+                        (usuario_id, company_id),
                     )
                     row = cursor.fetchone()
                     if not row:
@@ -302,7 +304,7 @@ class mo_Usuario:
             return None
 
     @staticmethod
-    def clear_active_session_token(usuario_id, session_token=None):
+    def clear_active_session_token(usuario_id, company_id,session_token=None):
         conn = None
         try:
             conn = get_connection()
@@ -310,13 +312,13 @@ class mo_Usuario:
                 mo_Usuario._ensure_active_sessions_table(cursor)
                 if session_token:
                     cursor.execute(
-                        "DELETE FROM sesiones_activas WHERE usuario_id = %s AND session_token = %s",
-                        (usuario_id, session_token),
+                        "DELETE FROM sesiones_activas WHERE usuario_id = %s AND session_token = %s and company_id=%s",
+                        (usuario_id, company_id,session_token),
                     )
                 else:
                     cursor.execute(
-                        "DELETE FROM sesiones_activas WHERE usuario_id = %s",
-                        (usuario_id,),
+                        "DELETE FROM sesiones_activas WHERE usuario_id = %s AND company_id= %s",
+                        (usuario_id, company_id),
                     )
                 conn.commit()
             return True

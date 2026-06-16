@@ -24,12 +24,13 @@ def login_required(f):
             return _unauthorized_response()
 
         user_id = user.get("id")
+        company_id = user.get("company_id")
         current_token = session.get("session_token")
         if not user_id or not current_token:
             session.clear()
             return _unauthorized_response()
 
-        active_token = mo_Usuario.get_active_session_token(user_id)
+        active_token = mo_Usuario.get_active_session_token(user_id, company_id)
         if not active_token or active_token != current_token:
             session.clear()
             return _unauthorized_response()
