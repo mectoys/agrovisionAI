@@ -10,6 +10,7 @@ from src.utils.decorators import login_required
 from src.views.vi_UsuarioEX import main as usuario_blueprint
 from src.views.vi_Monitoring import main as monitoring_blueprint
 from src.views.farms.farm_view import main as farm_blueprint
+from src.views.crops.crop_view import main as crop_blueprint
 
 from src.models.entities import Usuario
 from src.models.company_model import company_model
@@ -20,6 +21,7 @@ app.config.from_object(AppConfig)
 app.register_blueprint(farm_blueprint, url_pefix="/")
 app.register_blueprint(usuario_blueprint, url_prefix="/")
 app.register_blueprint(monitoring_blueprint, url_prefix="/")
+app.register_blueprint(crop_blueprint, url_prefix="/")
 
 
 #app.register_blueprint(vi_VisitaEX.main, url_prefix="/")
@@ -55,12 +57,11 @@ def login():
         companyid = company["id"]
 
         autenticado, mensaje, datos_usuario = mo_Usuario.get_usuario(username, password, companyid)
-        print(autenticado)
+
         if autenticado:
 
             # Sesion unica por usuario: un nuevo login invalida la sesion anterior.
             session_token = secrets.token_urlsafe(32)
-            print(datos_usuario["company_id"])
             if not mo_Usuario.set_active_session_token(datos_usuario["id"], session_token, datos_usuario["company_id"]):
                 flash("No se pudo iniciar sesion en este momento. Intente nuevamente.", "danger")
                 return render_template("login.html")
