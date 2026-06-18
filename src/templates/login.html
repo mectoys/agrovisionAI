@@ -73,11 +73,12 @@
         </div>
 
         <h1 class="brand-title gradient-text mb-3">
-          AGROVISION AI
+          CHAKRA AI
         </h1>
 
         <p class="fs-5 mb-5 leading-relaxed">
-          Plataforma inteligente enfocada en monitoreo agricola, analisis de cultivos mediante inteligencia artificial y recomendaciones para optimizar la productividad agricola.
+          Plataforma inteligente enfocada en monitoreo agricola, analisis de cultivos mediante inteligencia artificial
+          y recomendaciones para optimizar la productividad agricola.
         </p>
 
         <div class="space-y-4">
@@ -87,7 +88,7 @@
                 <i class="bi bi-camera text-white fs-4"></i>
               </div>
               <div>
-                <h5 class="mb-1 fw-semibold">Analisis Inteligente</h5>
+                <h5 class="mb-1 fw-semibold">Análisis Inteligente</h5>
                 <p class="mb-0 small text-light-emphasis">
                   Diagnostico agricola mediante imagenes y vision computacional.
                 </p>
@@ -117,7 +118,7 @@
             <div class="logo-box mx-auto">
               <i class="bi bi-flower2"></i>
             </div>
-            <h2 class="fw-bold text-success">AGROVISION AI</h2>
+            <h2 class="fw-bold text-success">CHAKRA AI</h2>
           </div>
 
           <div class="mb-4">
@@ -228,19 +229,19 @@
 
         const rucInput = document.getElementById('ruc');
         if (rucInput) {
-          localStorage.setItem('agrovision_preferencia_ruc', rucInput.value);
+          localStorage.setItem('chakra_preferencia_ruc', rucInput.value);
         }
 
         const userInput = document.getElementById('username');
         if (userInput) {
-          localStorage.setItem('agrovision_preferencia_user', userInput.value);
+          localStorage.setItem('chakra_preferencia_user', userInput.value);
         }
       });
     }
 
     window.onload = function() {
 
-      const rucGuardado = localStorage.getItem('agrovision_preferencia_ruc');
+      const rucGuardado = localStorage.getItem('chakra_preferencia_ruc');
       if (rucGuardado) {
         const rucInput = document.getElementById('ruc');
         if (rucInput) {
@@ -249,7 +250,7 @@
       }
 
 
-      const userGuardado = localStorage.getItem('agrovision_preferencia_user');
+      const userGuardado = localStorage.getItem('chakra_preferencia_user');
       if (userGuardado) {
         const userInput = document.getElementById('username');
         if (userInput) {

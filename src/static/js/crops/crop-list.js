@@ -25,7 +25,7 @@ function asignarConfiguraciones(url = "/crops/data"){
                         { data: 'name',title:'Nombre' },
                         { data: 'scientific_name',title:'Nombre Científico' },
                         { data: 'description' ,title:'Descripción'},
-                        { data: 'created_at' ,title:'fecha_creacion'}
+                        { data: 'fecha_creacion' ,title:'fecha_creacion'}
                     ],
 
                      dom: 'Bfrtip',

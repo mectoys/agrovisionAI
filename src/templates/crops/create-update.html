@@ -11,6 +11,7 @@
             {% set es_edicion = crop is not none %}
 
             <div class="mb-4">
+                <p>crop</p>
                 <h3 class="chakra-section-title mb-2">{{ "Editar Cultivo" if es_edicion else "Crear Cultivo" }}</h3>
                 <p class="chakra-section-subtitle mb-0">
                    Gestiona registro de los Cultivos que tienes.
@@ -21,9 +22,10 @@
                 {{ macros.form_controls('text', 'name', 'Nombre:', 'form-control', crop.name if crop else '') }}
                 {{ macros.form_controls('text', 'scientific_name', 'Nombre Científico:', 'form-control',
                 crop.scientific_name if crop else '') }}
-                {{ macros.form_controls('number', 'area_hectares', 'Hectáreas:', 'form-control', farm.area_hectares
-                if farm else '', step='0.01', min='0.01', placeholder='Ejemplo: 577.50', inputmode='decimal') }}
+                {{ macros.form_controls('text', 'description', 'Descripcion:', 'form-control',
+                crop.description if crop else '') }}
                 {{ macros.load_spinner() }}
+
             </div>
 
             <input  type="hidden" id="idcrop" name="idcrop" value="{{ crop.id if crop else '0' }}">
@@ -36,12 +38,12 @@
 
 <script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
 <script src="{{ url_for('static', filename='js/closeforms.js') }}"></script>
-<script src="{{ url_for('static', filename='js/farms/farm-form.js') }}"></script>
+<script src="{{ url_for('static', filename='js/crops/crop-form.js') }}"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         vo_methodCreate();
-        vo_closeForms('/farms');
+        vo_closeForms('/crops');
 
         });
 

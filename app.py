@@ -65,7 +65,7 @@ def login():
             if not mo_Usuario.set_active_session_token(datos_usuario["id"], session_token, datos_usuario["company_id"]):
                 flash("No se pudo iniciar sesion en este momento. Intente nuevamente.", "danger")
                 return render_template("login.html")
-
+            print(datos_usuario["company_id"])
             session["usuario"] = {
                 "id": datos_usuario["id"],
                 "company_id": datos_usuario["company_id"],
@@ -106,7 +106,7 @@ def prueba():
 
     resultado = mo_Usuario.crear_usuario(admin)
 
-    print(resultado)
+
 
 
 if __name__ == "__main__":
