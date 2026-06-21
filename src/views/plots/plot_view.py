@@ -46,21 +46,21 @@ def Plots_data():
 @login_required
 def plot_form_page():
     idplot = request.args.get('id', type=int)
-    plot = plot_model.get_onecrop(idfarm) if idfarm else None
+    plot = plot_model.get_plots(idplot) if idplot else None
     return render_template(
         '/farms/create-update.html',
         use_datatables=True,
         use_visitorcss=False,
-        farm=farm,
+        plot=plot,
     )
 
 
 @main.route('/farms/page', methods=['POST'])
 @login_required
-def farm_form_action():
+def plot_form_action():
     try:
         data = request.get_json()
-        idfarm = int(data.get('idfarm', 0))
+        idplot = int(data.get('idplot', 0))
         name = data.get('name', '').strip()
         location = data.get('location', '').strip()
         area_hectares = float(data.get('area_hectares', 0))
@@ -69,13 +69,13 @@ def farm_form_action():
         if not name or not location or not area_hectares:
             return jsonify({"success": False, "error": "Campos obligatorios incompletos"}), 400
 
-        farm_obj = farm(id_user, name, location, area_hectares, idfarm if idfarm else 0)
-        if idfarm:
-            result = farm_model.update_farm(farm_obj)
-            message = "Fundo actualizado correctamente"
+        plot_obj = plot(id_user, name, location, area_hectares, idplot if idplot else 0)
+        if idplot:
+            result = plot_model.update_plot(plot_obj)
+            message = "Parcela actualizado correctamente"
         else:
-            result = farm_model.save_farm(farm_obj)
-            message = "Fundo creado correctamente"
+            result = plot_model.save_farm(plot_obj)
+            message = "Parcela creado correctamente"
 
         if result.get("success"):
             return jsonify({"success": True, "message": message}), 200

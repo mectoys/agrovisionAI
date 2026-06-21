@@ -5,7 +5,6 @@ import secrets
 from contextlib import contextmanager
 
 
-
 class plot_model:
 
     @staticmethod
@@ -24,7 +23,7 @@ class plot_model:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     query = """
-                            SELECT id, farm_id,crop_id,name, planted_date,area 
+                            SELECT id, name, planted_date, area, created_at as fecha_creacion  
                             FROM plots
                             WHERE company_id  =%s
                             """
@@ -42,7 +41,7 @@ class plot_model:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     query = """
-                            SELECT id, farm_id, crop_id, name, planted_date, area 
+                            SELECT id, name, planted_date, area, created_at as fecha_creacion 
                             FROM plots
                             WHERE id = %s  AND company_id= %s
                             """
@@ -76,7 +75,7 @@ class plot_model:
 
             if error_code == 1062:  # Código de error para entradas duplicadas
                 if 'plots.name' in error_message:
-                    return {"success": False, "error": "El nombre de Cultivo ya existe"}
+                    return {"success": False, "error": "El nombre de la Parcela ya existe"}
 
                 else:
                     return {"success": False, "error": "Dato duplicado en la base de datos"}
@@ -107,7 +106,7 @@ class plot_model:
                         area = %s,
                     WHERE id = %s AND company_id = %s
                     """,
-                    (obj_plot.farm_id , obj_plot.crop_id, obj_plot.name, obj_plot.planted_date, obj_plot.area,
+                    (obj_plot.farm_id, obj_plot.crop_id, obj_plot.name, obj_plot.planted_date, obj_plot.area,
                      obj_plot.crop_id, obj_plot.company_id)
                 )
                 conn.commit()

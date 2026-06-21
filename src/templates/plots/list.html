@@ -1,10 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends './base.html' %}
+{% block title %}Listado Parcelas{% endblock %}
 
-</body>
-</html>
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="chakra-module-shell p-4">
+            <div class="chakra-toolbar">
+                <div>
+                    <h2 class="chakra-section-title mb-1">Parcelas</h2>
+                    <p class="chakra-section-subtitle mb-0">
+                        Gestiona registro de las Parcelas que tienes.
+                    </p>
+                </div>
+
+                <button id="editar" class="btn btn-agro shadow-sm">
+                    <i class="bi bi-pencil-square me-2"></i>Editar Parcelas
+                </button>
+            </div>
+
+            <button id="agregar" class="floating-btn">
+                <i class="fa fa-plus"></i>
+            </button>
+
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                    <div class="row align-items-end">
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">
+                                Fundo
+                            </label>
+
+                            <select id="cmbFarm" class="form-select">
+                                <option value="">Todos los Fundos</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-8 text-md-end mt-3 mt-md-0">
+
+                            <span class="badge bg-success">
+                                Parcelas Registradas:
+                                <span id="lblTotalPlots">0</span>
+                            </span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="chakra-table-shell">
+                <table id="table_id" class="display hover" style="width:100%">
+                    <thead>
+                        <tr class="thread-dark">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/plot/plot-list.js') }}"></script>
+<script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        asignarConfiguraciones();
+    });
+</script>
+{% endblock %}
+
+{% block extra_js %}
+    {% include './datatable_includes.html' %}
+{% endblock %}

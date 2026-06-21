@@ -11,6 +11,7 @@ from src.views.vi_UsuarioEX import main as usuario_blueprint
 from src.views.vi_Monitoring import main as monitoring_blueprint
 from src.views.farms.farm_view import main as farm_blueprint
 from src.views.crops.crop_view import main as crop_blueprint
+from src.views.plots.plot_view import main as plot_blueprint
 
 from src.models.entities import Usuario
 from src.models.company_model import company_model
@@ -22,6 +23,7 @@ app.register_blueprint(farm_blueprint, url_pefix="/")
 app.register_blueprint(usuario_blueprint, url_prefix="/")
 app.register_blueprint(monitoring_blueprint, url_prefix="/")
 app.register_blueprint(crop_blueprint, url_prefix="/")
+app.register_blueprint(plot_blueprint, url_prefix="/")
 
 
 #app.register_blueprint(vi_VisitaEX.main, url_prefix="/")
