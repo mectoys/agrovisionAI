@@ -22,7 +22,7 @@ function asignarConfiguraciones(url = "/crops/data"){
                     },
                     columns :[
                         { data: 'id',title:'id' },
-                        { data: 'name',title:'Nombre' },
+                        { data: 'descripcion',title:'Nombre' },
                         { data: 'scientific_name',title:'Nombre Científico' },
                         { data: 'description' ,title:'Descripción'},
                         { data: 'fecha_creacion' ,title:'fecha_creacion'}

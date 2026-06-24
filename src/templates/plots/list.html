@@ -1,4 +1,5 @@
 {% extends './base.html' %}
+{% import './macros.html' as macros %}
 {% block title %}Listado Parcelas{% endblock %}
 
 {% block body %}
@@ -28,31 +29,22 @@
 
                         <div class="col-md-4">
                             <label class="form-label fw-semibold">
-                                Fundo
+                               Seleccione un Fundo para continuar:
                             </label>
 
                             <select id="cmbFarm" class="form-select">
                                 <option value="">Todos los Fundos</option>
                             </select>
                         </div>
-
-                        <div class="col-md-8 text-md-end mt-3 mt-md-0">
-
-                            <span class="badge bg-success">
-                                Parcelas Registradas:
-                                <span id="lblTotalPlots">0</span>
-                            </span>
-
-                        </div>
-
                     </div>
                 </div>
             </div>
-
+             {{ macros.load_spinner() }}
             <div class="chakra-table-shell">
                 <table id="table_id" class="display hover" style="width:100%">
                     <thead>
                         <tr class="thread-dark">
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -68,11 +60,18 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/plot/plot-list.js') }}"></script>
+<script src="{{ url_for('static', filename='js/plots/plot-list.js') }}"></script>
 <script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/elementSelectsEX.js') }}"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function(){
         asignarConfiguraciones();
+
+        //Input Select Fundos
+        loadOptions('#cmbFarm','/farms/data','id', function(){
+
+        });
     });
 </script>
 {% endblock %}

@@ -24,7 +24,7 @@ class crop_model:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     query = """
-                            SELECT id, name, scientific_name, description, created_at as fecha_creacion
+                            SELECT id, name as descripcion, scientific_name, description, created_at as fecha_creacion
                             FROM crops  
                             WHERE company_id  =%s
                             """

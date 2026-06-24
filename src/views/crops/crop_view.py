@@ -18,7 +18,6 @@ def ObtainUserId():
 
 def ObtainCompanyId():
     usuario = session.get('usuario')
-
     if not usuario:
         return jsonify([]), 401
     id_company = usuario.get('company_id')

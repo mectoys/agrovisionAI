@@ -22,7 +22,7 @@ function asignarConfiguraciones(url = "/farms/data"){
                     },
                     columns :[
                         { data: 'id',title:'id' },
-                        { data: 'name',title:'Nombre' },
+                        { data: 'descripcion',title:'Nombre' },
                         { data: 'location',title:'Ubicación' },
                         { data: 'area_hectares' ,title:'Hectáreas'},
                         { data: 'fecha_creacion' ,title:'fecha_creacion'}
@@ -50,19 +50,20 @@ function asignarConfiguraciones(url = "/farms/data"){
         //********************************************
         //Botón agregar (para cargar la pagina Mant Usuario)
             $('#agregar').on('click', function () {
-                window.location.href = '/farms/farm-createupdate';
+
+                window.location.href = "/farms/farm-createupdate";
             });
            //*******************************************************
         //Boton Editar (para cargar la pagina de Edicion)
 
             $('#editar').on('click', function (e) {
-                    if (typeof id_farm === 'undefined' || id_farm === null) {
-            Swal.fire({
-                title: "Fundo",
-                text: "Seleccione una fila",
-                icon: "warning"
-            });
-            return;
+            if (typeof id_farm === 'undefined' || id_farm === null) {
+                Swal.fire({
+                    title: "Fundo",
+                    text: "Seleccione una fila",
+                    icon: "warning"
+                });
+                return;
         }
         // Redirige directamente con el ID como query param
         //IDOR (Insecure Direct Object Reference)

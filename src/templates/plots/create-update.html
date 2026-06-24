@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends './base.html' %}
+{% import './macros.html' as macros %}
+{% block title %}Gestión Parcelas{% endblock %}
 
-</body>
-</html>
+{% block body %}
+<div class="container mt-4">
+    <div class="chakra-module-shell position-relative">
+        {{ macros.title_bar("Gestión Parcelas") }}
+
+        <div class="chakra-form-body">
+            {% set es_edicion = plot is not none %}
+
+            <div class="mb-4">
+                <h3 class="chakra-section-title mb-2">{{ "Editar Parcela" if es_edicion else "Crear Parcela" }}</h3>
+                <p class="chakra-section-subtitle mb-0">
+                   Gestiona registro de las Parcelas que tienes.
+                </p>
+            </div>
+
+            <div class="row mt-3">
+                {{ macros.form_controls('text', 'name', 'Fundo:', 'form-control',
+                farm.name if farm else '',readonly=True) }}
+
+           <div class="col-md-3 mb-3">
+                <label for="cmbCrop" class="form-label fw-bold text-secondary">Culivo:</label>
+                <select id="cmbCrop" name="crop" class="form-select">
+                </select>
+             </div>
+                {{ macros.form_controls('text', 'name', 'Nombre:', 'form-control', plot.name if plot else '') }}
+
+                {{ macros.form_controls('number', 'area', 'Hectáreas:', 'form-control', plot.area
+                if plot else '', step='0.01', min='0.01', placeholder='Ejemplo: 577.50', inputmode='decimal') }}
+
+                {{ macros.load_spinner() }}
+            </div>
+
+            <input  type="hidden" id="idplot" name="idplot" value="{{ plot.id if plot else '0' }}">
+             <input   id="idfarm" name="idfarm" value="{{ farm.id if farm else '0' }}">
+
+            <button id="guardar" class="btn btn-agro mt-2">
+                {{ "Actualizar Parcela" if es_edicion else "Crear Parcela" }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/closeforms.js') }}"></script>
+<script src="{{ url_for('static', filename='js/plots/plot-form.js') }}"></script>
+<script src="{{ url_for('static', filename='js/elementSelectsEX.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        vo_methodCreate();
+        vo_closeForms('/plots');
+        //Select Cultivos
+        loadOptions('#cmbCrop','/crops/data','id', function(){
+
+            });
+        });
+
+</script>
+{% endblock %}

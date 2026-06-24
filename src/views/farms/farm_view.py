@@ -4,8 +4,8 @@ from src.models.farm_model import farm_model
 from src.models.entities.farm import farm
 from src.utils.decorators import admin_required, login_required
 
-
 main = Blueprint('bp_farm', __name__)
+
 
 #Obtener datos de usuario por sesion
 def ObtainUserId():
@@ -16,21 +16,31 @@ def ObtainUserId():
     return id_user
 
 
+def ObtainCompanyId():
+    usuario = session.get('usuario')
+    if not usuario:
+        return jsonify([]), 401
+    id_company = usuario.get('company_id')
+    return id_company
+
+
 @main.route('/farms')
 @login_required
 def list_farms():
-
     return render_template(
         '/farms/list.html',
         use_datatables=True,
         use_visitorcss=False,
     )
+
+
 #Cargar listado de Fincas Farms
 @main.route('/farms/data')
 @login_required
 def Farms_data():
     id_user = ObtainUserId()
-    farms = farm_model.get_farms(id_user)
+    id_company = ObtainCompanyId()
+    farms = farm_model.get_farms(id_user, id_company)
 
     for v in farms:
         # Formateo fecha creacion
@@ -46,7 +56,8 @@ def Farms_data():
 @login_required
 def farm_form_page():
     idfarm = request.args.get('id', type=int)
-    farm = farm_model.get_onefarm(idfarm) if idfarm else None
+    id_company = ObtainCompanyId()
+    farm = farm_model.get_onefarm(idfarm, id_company) if idfarm else None
     return render_template(
         '/farms/create-update.html',
         use_datatables=True,
@@ -65,11 +76,12 @@ def farm_form_action():
         location = data.get('location', '').strip()
         area_hectares = float(data.get('area_hectares', 0))
         id_user = ObtainUserId()
+        id_company = ObtainCompanyId()
 
         if not name or not location or not area_hectares:
             return jsonify({"success": False, "error": "Campos obligatorios incompletos"}), 400
 
-        farm_obj = farm(id_user, name, location, area_hectares, idfarm if idfarm else 0)
+        farm_obj = farm(id_user, name, location, area_hectares, id_company, idfarm if idfarm else 0)
         if idfarm:
             result = farm_model.update_farm(farm_obj)
             message = "Fundo actualizado correctamente"

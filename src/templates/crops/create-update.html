@@ -19,6 +19,7 @@
             </div>
 
             <div class="row mt-3">
+
                 {{ macros.form_controls('text', 'name', 'Nombre:', 'form-control', crop.name if crop else '') }}
                 {{ macros.form_controls('text', 'scientific_name', 'Nombre Científico:', 'form-control',
                 crop.scientific_name if crop else '') }}
@@ -45,7 +46,7 @@
         vo_methodCreate();
         vo_closeForms('/crops');
 
-        });
+    });
 
 </script>
 {% endblock %}

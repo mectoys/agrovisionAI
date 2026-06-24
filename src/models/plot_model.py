@@ -18,16 +18,18 @@ class plot_model:
                 connection.close()
 
     @staticmethod
-    def get_plots(companyid):
+    def get_plots(farmid, companyid):
         try:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     query = """
-                            SELECT id, name, planted_date, area, created_at as fecha_creacion  
-                            FROM plots
-                            WHERE company_id  =%s
+                            SELECT P.id, C.name as Cultivo ,P.name, P.planted_date, P.area, 
+                            P.created_at as fecha_creacion  
+                            FROM plots P
+                            INNER JOIN crops C ON C.id =  P.crop_id
+                            WHERE P.farm_id=%s  AND company_id  =%s
                             """
-                    val = (companyid,)
+                    val = (farmid,companyid)
                     cursor.execute(query, val)
                     crops = cursor.fetchall()
                     return crops
@@ -59,9 +61,9 @@ class plot_model:
             conn = get_connection()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO plots (farm_id, crop_id, name, planted_date, area , company_id)"
-                    " VALUES (%s, %s, %s,  %s, %s,  %s)",
-                    (obj_plot.farm_id, obj_plot.crop_id, obj_plot.name, obj_plot.planted_date, obj_plot.area,
+                    "INSERT INTO plots (farm_id, crop_id, name,  area , company_id)"
+                    " VALUES (%s, %s,  %s, %s,  %s)",
+                    (obj_plot.farm_id, obj_plot.crop_id, obj_plot.name, obj_plot.area,
                      obj_plot.company_id)
                 )
                 conn.commit()

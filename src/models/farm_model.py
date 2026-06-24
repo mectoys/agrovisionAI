@@ -3,7 +3,6 @@ from mysql.connector import Error as MySqlError
 from datetime import datetime
 import secrets
 from contextlib import contextmanager
-import bcrypt
 
 
 class farm_model:
@@ -19,16 +18,16 @@ class farm_model:
                 connection.close()
 
     @staticmethod
-    def get_farms(userid):
+    def get_farms(userid, companyid):
         try:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     query = """
-                            SELECT id, name, location, area_hectares, created_at as fecha_creacion
+                            SELECT id, name as descripcion, location, area_hectares, created_at as fecha_creacion
                             FROM farms  
-                            WHERE user_id  =%s
+                            WHERE user_id  =%s AND  company_id =%s
                             """
-                    val = (userid,)
+                    val = (userid, companyid)
                     cursor.execute(query, val)
                     farms = cursor.fetchall()
                     return farms
@@ -37,16 +36,16 @@ class farm_model:
             return False, "Error en el servidor", None
 
     @staticmethod
-    def get_onefarm(idfarm):
+    def get_onefarm(idfarm, companyid):
         try:
             with get_connection() as conn:
                 with conn.cursor(dictionary=True) as cursor:
                     query = """
                             SELECT id,name,location,area_hectares,created_at 
                             FROM farms 
-                            WHERE id = %s    
+                            WHERE id = %s AND company_id =%s  
                             """
-                    val = (idfarm,)
+                    val = (idfarm, companyid)
                     cursor.execute(query, val)
                     return cursor.fetchone()
         except Exception as e:
@@ -60,8 +59,8 @@ class farm_model:
             conn = get_connection()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO farms (name, user_id, location, area_hectares) VALUES (%s, %s, %s, %s)",
-                    (obj_farm.name, obj_farm.user_id, obj_farm.location, obj_farm.area_hectares)
+                    "INSERT INTO farms (name, user_id, location, area_hectares, company_id) VALUES (%s, %s, %s, %s,%s)",
+                    (obj_farm.name, obj_farm.user_id, obj_farm.location, obj_farm.area_hectares, obj_farm.company_id)
                 )
                 conn.commit()
                 return {"success": True, "message": "Fundo creado"}
